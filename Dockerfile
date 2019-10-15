@@ -38,7 +38,6 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
     apt-get install -y libcairo2-dev && \
     apt-get install -y libpango1.0-dev && \
     apt-get install -y $GUACD_BUILD_DEPS && \
-###### Build & Install Guacd ######
     cd /tmp && \
     var=-1 ; \
     while [ "$var" != 0 ] ; do \
