@@ -30,30 +30,27 @@ ENV Common_BUILD_DEPS="build-essential curl"
 ENV GUACD_BUILD_DEPS="libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev libavcodec-dev libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev libfreerdp-dev"
 
 ###### Install & Download Prerequisites ######
-RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
+RUN DEBIAN_FRONTEND=noninteractive && \
+    ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata && \
-    apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove -y && apt-get autoclean && \
-    apt-get install -y $GUACD_RUN_DEPS && \
-    apt-get install -y $Common_BUILD_DEPS && \
-    apt-get install -y libcairo2-dev && \
-    apt-get install -y libpango1.0-dev && \
-    apt-get install -y $GUACD_BUILD_DEPS && \
+    apt-get update -qq && \
+    apt-get upgrade -qq && \
+    apt-get dist-upgrade -qq && \
+    apt-get autoremove -qq && \
+    apt-get autoclean -qq && \
+    apt-get install -qq $GUACD_RUN_DEPS $Common_BUILD_DEPS $GUACD_BUILD_DEPS && \
     cd /tmp && \
-    var=-1 ; \
-    while [ "$var" != 0 ] ; do \
-        curl -L "https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" | tar -xz ; \
-        var=$? ; \
-        echo $var ; \
-        sleep 3 ; \
-    done && \
-    cd /tmp/guacamole-server-$GUACD_Version && \
+    mkdir guacamole-server && \
+    curl -L "https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" | tar -xz -C /tmp/guacamole-server --strip-components=1 && \
+    cd /tmp/guacamole-server && \
     autoreconf -fi && \
     ./configure && \
     sleep 10 && \
     make && \
     make install && \
-    apt-get purge -y $Common_BUILD_DEPS $GUACD_BUILD_DEPS && \
-    apt-get autoremove -y && apt-get autoclean && \
+    apt-get purge -qq $Common_BUILD_DEPS $GUACD_BUILD_DEPS && \
+    apt-get autoremove -qq && \
+    apt-get autoclean && \
     rm -rf /tmp/*
 
 # ports and volumes
