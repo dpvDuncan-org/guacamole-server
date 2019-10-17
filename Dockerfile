@@ -29,8 +29,10 @@ ENV Common_BUILD_DEPS="build-essential curl"
 
 ENV GUACD_BUILD_DEPS="libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev libavcodec-dev libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev libfreerdp-dev"
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ###### Install & Download Prerequisites ######
-RUN DEBIAN_FRONTEND=noninteractive && \
+RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata && \
     apt-get update -qq && \
