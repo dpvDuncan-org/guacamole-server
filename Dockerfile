@@ -15,10 +15,7 @@ ARG ARCH
 COPY qemu-${ARCH}-static /usr/bin
 
 # Environment variables
-ARG GUACD_Version
-ENV GUACD_Version="${GUACD_Version}"
-
-# Environment variables
+ENV GUACD_Version="1.0.0"
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/usr/local/lib"
 ENV C_INCLUDE_PATH="${C_INCLUDE_PATH:+$C_INCLUDE_PATH:}/usr/local/include"
 
