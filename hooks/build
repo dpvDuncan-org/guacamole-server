@@ -15,6 +15,7 @@ for arch in ${verified_build_architectures[@]}; do
   docker build \
     --build-arg BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX} \
     --build-arg ARCH=${arch} \
+    --build-arg GUACD_Version=${GUACD_Version} \
     --file $DOCKERFILE_PATH \
     --tag "${IMAGE_NAME}-${arch}"  \
     .
