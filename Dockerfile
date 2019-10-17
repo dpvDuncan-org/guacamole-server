@@ -41,7 +41,7 @@ RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
     cd /tmp && \
     mkdir guacamole-server && \
     echo "Downloading https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" && \
-    curl -L "https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" | tar -xz -C /tmp/guacamole-server --strip-components=1 && \
+    curl -s -L "https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" | tar -xz -C /tmp/guacamole-server --strip-components=1 && \
     cd /tmp/guacamole-server && \
     autoreconf -fi && \
     ./configure && \
