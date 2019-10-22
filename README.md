@@ -1,1 +1,1 @@
-# docker-multiarch-skel
+# guacamole-server
