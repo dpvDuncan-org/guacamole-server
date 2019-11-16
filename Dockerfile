@@ -1,18 +1,12 @@
-# see hooks/build and hooks/.config
 ARG BASE_IMAGE_PREFIX
-FROM ${BASE_IMAGE_PREFIX}alpine
 
-# see hooks/post_checkout
-ARG ARCH
-COPY .gitignore qemu-${ARCH}-static* /usr/bin/
+FROM multiarch/qemu-user-static as qemu
 
-# see hooks/build and hooks/.config
-ARG BASE_IMAGE_PREFIX
-FROM ${BASE_IMAGE_PREFIX}debian:stretch-slim
+FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
 
-# see hooks/post_checkout
-ARG ARCH
-COPY qemu-${ARCH}-static /usr/bin
+COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
+COPY scripts/start.sh /
+COPY guacamole-server /tmp/
 
 # Environment variables
 ENV GUACD_Version="1.0.0"
@@ -29,31 +23,28 @@ ENV GUACD_BUILD_DEPS="libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-
 ENV DEBIAN_FRONTEND noninteractive
 
 ###### Install & Download Prerequisites ######
-RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty && \
-    ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
-    dpkg-reconfigure -f noninteractive tzdata && \
-    apt-get update -qq && \
-    apt-get upgrade -qq && \
-    apt-get dist-upgrade -qq && \
-    apt-get autoremove -qq && \
-    apt-get autoclean -qq && \
-    apt-get install -qq $GUACD_RUN_DEPS $Common_BUILD_DEPS $GUACD_BUILD_DEPS && \
-    cd /tmp && \
-    mkdir guacamole-server && \
-    echo "Downloading https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" && \
-    curl -s -L "https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" | tar -xz -C /tmp/guacamole-server --strip-components=1 && \
-    cd /tmp/guacamole-server && \
-    autoreconf -fi && \
-    ./configure && \
-    sleep 10 && \
-    make && \
-    make install && \
-    apt-get purge -qq $Common_BUILD_DEPS $GUACD_BUILD_DEPS && \
-    apt-get autoremove -qq && \
-    apt-get autoclean && \
-    rm -rf /tmp/*
+RUN echo 'Dpkg::Use-Pty "0";' > /etc/apt/apt.conf.d/00usepty
+RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime
+RUN dpkg-reconfigure -f noninteractive tzdata
+RUN apt-get update -qq
+RUN apt-get upgrade -qq
+RUN apt-get dist-upgrade -qq
+RUN apt-get autoremove -qq
+RUN apt-get autoclean -qq
+RUN apt-get install -qq $GUACD_RUN_DEPS $Common_BUILD_DEPS $GUACD_BUILD_DEPS
+WORKDIR /tmp/guacamole-server
+RUN autoreconf -fi
+RUN ./configure
+RUN make
+RUN make install
+RUN apt-get purge -qq $Common_BUILD_DEPS $GUACD_BUILD_DEPS
+RUN apt-get autoremove -qq
+RUN apt-get autoclean -qq
+WORKDIR /
+
+RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
 
 # ports and volumes
 EXPOSE 4822
 
-CMD [ "/usr/local/sbin/guacd", "-b", "0.0.0.0", "-f" ]
+CMD [ "/start.sh" ]
