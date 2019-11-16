@@ -8,6 +8,8 @@ echo "✅ Download sources)"
 echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 mkdir -p ./guacamole-server
 
+GUACD_Version=${GUACD_Version}
+
 echo "Downloading https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz"
 curl -s -L "https://github.com/apache/guacamole-server/archive/${GUACD_Version}.tar.gz" | tar -xz -C ./guacamole-server --strip-components=1
 
