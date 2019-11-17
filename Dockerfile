@@ -2,7 +2,7 @@ ARG BASE_IMAGE_PREFIX
 
 FROM multiarch/qemu-user-static as qemu
 
-FROM ${BASE_IMAGE_PREFIX}debian:stable-slim
+FROM ${BASE_IMAGE_PREFIX}debian:stretch-slim
 
 COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
