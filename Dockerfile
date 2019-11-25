@@ -6,7 +6,7 @@ FROM ${BASE_IMAGE_PREFIX}debian:stretch-slim
 
 COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
-COPY guacamole-server /tmp/
+COPY guacamole-server /tmp/guacamole-server
 
 # Environment variables
 ENV GUACD_Version="1.0.0"
