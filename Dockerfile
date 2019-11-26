@@ -41,6 +41,7 @@ RUN apt-get purge -qq $Common_BUILD_DEPS $GUACD_BUILD_DEPS
 RUN apt-get autoremove -qq
 RUN apt-get autoclean -qq
 WORKDIR /
+RUN chmod +x /start.sh
 
 RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
 
