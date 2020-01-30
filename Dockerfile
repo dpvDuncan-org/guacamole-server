@@ -2,14 +2,15 @@ ARG BASE_IMAGE_PREFIX
 
 FROM multiarch/qemu-user-static as qemu
 
-FROM ${BASE_IMAGE_PREFIX}debian:stretch-slim
+FROM ${BASE_IMAGE_PREFIX}debian:buster-slim
 
 COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
 COPY guacamole-server /tmp/guacamole-server
 
 # Environment variables
-ENV GUACD_Version="1.0.0"
+ARG GUACD_Version
+ENV GUACD_Version=${GUACD_Version}
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/usr/local/lib"
 ENV C_INCLUDE_PATH="${C_INCLUDE_PATH:+$C_INCLUDE_PATH:}/usr/local/include"
 
