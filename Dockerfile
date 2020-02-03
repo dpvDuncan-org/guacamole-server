@@ -15,11 +15,11 @@ ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/usr/local/lib"
 ENV C_INCLUDE_PATH="${C_INCLUDE_PATH:+$C_INCLUDE_PATH:}/usr/local/include"
 
 #ENV LC_ALL="en_US.UTF-8"
-ENV GUACD_RUN_DEPS="libcairo2 libjpeg62-turbo libpng16-16 libossp-uuid16 libavcodec58 libavutil56 libswscale5 libpango1.0-0 libssh2-1 libtelnet2 libvncserver1 libvncclient1 libpulse0 libssl1.1 libvorbis0a libwebp6 libxkbfile1 libasound2 libfreerdp-client2.2"
+ENV GUACD_RUN_DEPS="libcairo2 libjpeg62-turbo libpng16-16 libossp-uuid16 libavcodec58 libavutil56 libswscale5 libpango1.0-0 libssh2-1 libtelnet2 libvncserver1 libvncclient1 libpulse0 libssl1.1 libvorbis0a libwebp6 libxkbfile1 libasound2 libfreerdp-client2.2 libwebsockets8"
 
-ENV Common_BUILD_DEPS="build-essential curl"
+ENV Common_BUILD_DEPS="build-essential curl autoconf libtool"
 
-ENV GUACD_BUILD_DEPS="libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev libavcodec-dev libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev"
+ENV GUACD_BUILD_DEPS="libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev libavcodec-dev libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev freerdp2-dev libwebsockets-dev"
 
 ENV DEBIAN_FRONTEND noninteractive
 
