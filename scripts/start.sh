@@ -4,13 +4,13 @@ chown -R $PUID:$PGID /usr/local/sbin/guacd
 GROUPNAME=$(getent group $PGID | cut -d: -f1)
 USERNAME=$(getent passwd $PUID | cut -d: -f1)
 
-if [ "${GROUPNAME}" == "" ]
+if [ "${GROUPNAME}" = "" ]
 then
         groupadd -g $PGID guacd
         GROUPNAME=guacd
 fi
 
-if [ "${USERNAME}" == "" ]
+if [ "${USERNAME}" = "" ]
 then
         useradd -m -G $GROUPNAME -u $PUID guacd
         USERNAME=guacd
