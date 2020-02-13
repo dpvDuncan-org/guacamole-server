@@ -1,1 +1,1 @@
-# guacamole-server
+# Guacamole Server
