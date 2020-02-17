@@ -22,9 +22,8 @@ for arch in ${build_architectures[@]}; do
 
   docker exec docker_daemon docker build \
     --squash \
-    --platform=${arch} \
+    --platform=${docker_arch_map[${arch}]} \
     --build-arg BASE_IMAGE_PREFIX=${base_image_prefix_map[${arch}]} \
-    --build-arg ARCH=${arch} \
     --build-arg GUACD_Version=${GUACD_Version} \
     --file /build/$DOCKERFILE_PATH \
     --tag "${IMAGE_NAME}-${arch}"  \
