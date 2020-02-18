@@ -32,10 +32,19 @@ echo
 echo "✅ Annotating manifest"
 echo "⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯"
 for arch in ${build_architectures[@]}; do
+    variant=""
+    if [ "${docker_to_manifest_variant_map[${arch}]}" != "" ]; then
+      variant="--variant ${docker_to_manifest_variant_map[${arch}]}"
+    fi
+    
+    echo "build_architecture= ${arch}"
+    echo "arch = ${docker_to_manifest_arch_map[${arch}]}"
+    echo "variant= ${docker_to_manifest_variant_map[${arch}]}"
     docker exec docker_daemon docker manifest annotate ${IMAGE_NAME} \
     ${IMAGE_NAME}-${arch} \
     --os linux \
-    --arch ${docker_to_manifest_map[${arch}]}
+    --arch ${docker_to_manifest_arch_map[${arch}]} \
+    ${variant}
 done
 
 echo "✅ Inspecting manifest ${IMAGE_NAME}-${arch}"
