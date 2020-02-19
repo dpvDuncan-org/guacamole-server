@@ -16,4 +16,4 @@ then
         USERNAME=guacd
 fi
 
-su -g $GROUPNAME $USERNAME -c '/usr/local/sbin/guacd -b 0.0.0.0 -f'
+su $USERNAME -c '/usr/local/sbin/guacd -b 0.0.0.0 -f'
