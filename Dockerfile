@@ -35,7 +35,7 @@ RUN apt-get autoclean -qq
 RUN apt-get install -qq $GUACD_RUN_DEPS $Common_BUILD_DEPS $GUACD_BUILD_DEPS
 WORKDIR /tmp/guacamole-server
 RUN autoreconf -fi
-RUN ./configure
+RUN ./configure --enable-allow-freerdp-snapshots
 RUN make
 RUN make install
 RUN apt-get purge -qq $Common_BUILD_DEPS $GUACD_BUILD_DEPS
