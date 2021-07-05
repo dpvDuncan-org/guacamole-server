@@ -2,7 +2,7 @@ ARG BASE_IMAGE_PREFIX
 
 FROM multiarch/qemu-user-static as qemu
 
-FROM ${BASE_IMAGE_PREFIX}alpine
+FROM ${BASE_IMAGE_PREFIX}alpine:3.13
 
 COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
@@ -14,12 +14,12 @@ ENV GUACD_Version=${GUACD_Version}
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}/usr/local/lib"
 ENV C_INCLUDE_PATH="${C_INCLUDE_PATH:+$C_INCLUDE_PATH:}/usr/local/include"
 
-ENV GUACD_RUN_DEPS="cairo ffmpeg-libs glib libcrypto1.1 libjpeg-turbo libpng libpulse libssh2 libssl1.1 libvncserver libwebp libwebsockets musl pango libvorbis libpulse ttf-inconsolata"
-ENV GUACD_RUN_DEPS_TESTING="ossp-uuid freerdp"
+ENV GUACD_RUN_DEPS="cairo ffmpeg-libs glib libcrypto1.1 libjpeg-turbo libpng libpulse libssh2 libssl1.1 libvncserver libwebp libwebsockets musl pango libvorbis libpulse ttf-inconsolata freerdp"
+ENV GUACD_RUN_DEPS_TESTING="ossp-uuid"
 ENV Common_BUILD_DEPS="curl autoconf automake gcc libtool cmake make fontconfig"
 
-ENV GUACD_BUILD_DEPS="cairo-dev ffmpeg-dev glib-dev libjpeg-turbo-dev libpng-dev libssh2-dev libvncserver-dev libwebp-dev libwebsockets-dev musl-dev pango-dev pulseaudio-dev libvorbis-dev"
-ENV GUACD_BUILD_DEPS_TESTING="ossp-uuid-dev freerdp-dev"
+ENV GUACD_BUILD_DEPS="cairo-dev ffmpeg-dev glib-dev libjpeg-turbo-dev libpng-dev libssh2-dev libvncserver-dev libwebp-dev libwebsockets-dev musl-dev pango-dev pulseaudio-dev libvorbis-dev freerdp-dev"
+ENV GUACD_BUILD_DEPS_TESTING="ossp-uuid-dev"
 
 
 ###### Install & Download Prerequisites ######
