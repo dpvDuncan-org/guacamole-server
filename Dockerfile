@@ -1,10 +1,7 @@
 ARG BASE_IMAGE_PREFIX
 
-FROM multiarch/qemu-user-static as qemu
-
 FROM ${BASE_IMAGE_PREFIX}alpine:3.13
 
-COPY --from=qemu /usr/bin/qemu-*-static /usr/bin/
 COPY scripts/start.sh /
 COPY guacamole-server /tmp/guacamole-server
 
@@ -39,7 +36,7 @@ RUN apk del .build-dependencies_testing
 WORKDIR /
 RUN chmod +x /start.sh
 
-RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* /usr/bin/qemu-*-static
+RUN rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # ports and volumes
 EXPOSE 4822
