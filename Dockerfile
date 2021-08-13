@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 ARG BASE_IMAGE_PREFIX
 
 FROM ${BASE_IMAGE_PREFIX}alpine:3.13
