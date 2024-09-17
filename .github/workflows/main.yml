@@ -36,6 +36,7 @@ jobs:
 
     - name: Prepare variables
       run: |
+        mkdir guacamole-server
         echo "Downloading https://github.com/apache/guacamole-server/archive/${{ vars.GUACD_Version }}.tar.gz"
         curl -s -L "https://github.com/apache/guacamole-server/archive/${{ vars.GUACD_Version }}.tar.gz" | tar -xz -C ./guacamole-server --strip-components=1
 
