@@ -49,3 +49,5 @@ jobs:
           linux/arm64
         push: true
         tags: ${{ env.IMAGE_NAME }}
+        build-args: |
+          GUACD_Version=${{ env.GUACD_Version }}
